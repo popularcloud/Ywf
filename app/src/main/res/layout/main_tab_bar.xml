@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabBar"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/tabDiscovery"
+        android:baselineAligned="false"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iconDiscovery"
+            android:layout_width="@dimen/tab_size"
+            android:layout_height="@dimen/tab_size"
+            android:src="@drawable/main_discovery_selector" />
+
+        <TextView
+            android:id="@+id/textDiscovery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/discovery"
+            android:textColor="@drawable/selector_main_tab"
+            android:textSize="@dimen/text_size_caption_material" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tabSubscription"
+        android:baselineAligned="false"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iconSubscription"
+            android:layout_width="@dimen/tab_size"
+            android:layout_height="@dimen/tab_size"
+            android:src="@drawable/main_subscription_selector"/>
+
+        <TextView
+            android:id="@+id/textSubscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subscription"
+            android:textColor="@drawable/selector_main_tab"
+            android:textSize="@dimen/text_size_caption_material" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tabPublished"
+        android:baselineAligned="false"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iconPublished"
+            android:layout_width="@dimen/tab_size"
+            android:layout_height="@dimen/tab_size"
+            android:src="@drawable/main_published_selector"/>
+
+        <TextView
+            android:id="@+id/textPublished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/published"
+            android:textColor="@drawable/selector_main_tab"
+            android:textSize="@dimen/text_size_caption_material" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tabMine"
+        android:baselineAligned="false"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iconMine"
+            android:layout_width="@dimen/tab_size"
+            android:layout_height="@dimen/tab_size"
+            android:src="@drawable/main_mine_selector"/>
+
+        <TextView
+            android:id="@+id/textMine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mine"
+            android:textColor="@drawable/selector_main_tab"
+            android:textSize="@dimen/text_size_caption_material" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ywf</string>
+
+    <!-- mian模块 -->
+    <string name="discovery">发现</string>
+    <string name="subscription">订阅</string>
+    <string name="published">发布</string>
+    <string name="mine">我的</string>
+
+</resources>
