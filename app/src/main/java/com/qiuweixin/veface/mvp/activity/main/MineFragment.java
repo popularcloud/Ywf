@@ -9,10 +9,15 @@ import android.view.ViewGroup;
 
 import com.qiuweixin.veface.R;
 
+import butterknife.Bind;
+
 /**
  * Created by Allen Lake on 2016/1/6 0006.
  */
 public class MineFragment extends Fragment{
+
+
+
 
     @Nullable
     @Override
