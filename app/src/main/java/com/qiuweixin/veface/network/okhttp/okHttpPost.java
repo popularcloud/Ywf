@@ -1,6 +1,9 @@
 package com.qiuweixin.veface.network.okhttp;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.qiuweixin.veface.callback.RequestCallBack;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -30,18 +33,18 @@ public class okHttpPost {
         mOkHttpClient.newCall(request).enqueue(new Callback(){
             @Override
             public void onFailure(Request request, IOException e) {
-                String bodys = request.body().toString();
-
-              String json = JSON.toJSONString(bodys);
                 if(mCallBack != null){
-                    mCallBack.onSuccess(json);
+                    mCallBack.onFailure(e.getMessage());
                 }
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
+                String bodys = response.body().string();
+                Log.d("bbb",bodys);
+                JSONObject jsonObject = JSON.parseObject(bodys);
                 if(mCallBack != null){
-                    mCallBack.onFailure(response.message());
+                    mCallBack.onSuccess(jsonObject);
                 }
             }
         });

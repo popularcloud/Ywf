@@ -23,9 +23,13 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
+    //网络请求
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okio:okio:1.5.0'
+
     compile 'com.alibaba:fastjson:latest.integration'
+    compile 'com.facebook.fresco:fresco:0.5.0+'
+    compile 'com.android.support:recyclerview-v7:23.+'
     compile files('libs/butterknife-7.0.1.jar')
     compile project(':viewpagerindicator')
 }

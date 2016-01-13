@@ -1,16 +1,13 @@
 package com.qiuweixin.veface.mvp.activity.main;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 
 import com.qiuweixin.veface.R;
 
@@ -51,7 +48,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     //当前选中的项
     int currenttab=-1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

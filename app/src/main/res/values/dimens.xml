@@ -6,6 +6,9 @@
     <!-- 底栏Tab的大小 -->
     <dimen name="tab_size">28dp</dimen>
 
+    <!-- 标题栏大小 -->
+    <dimen name="toolbar_height">48dp</dimen>
+
     <!--字体大小-->
     <dimen name="text_size_super_material">80dp</dimen>
     <dimen name="text_size_large_material">22dp</dimen>

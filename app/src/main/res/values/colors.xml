@@ -8,4 +8,5 @@
     <color name="theme_color">#1f7a8c</color><!-- 主题色 -->
     <color name="theme_color_dark">#004959</color><!-- 深主题色 -->
     <color name="theme_color_light">#0092af</color><!-- 亮主题色 -->
+    <color name="gray_transparent">#c8414141</color><!--灰色，半透明 -->
 </resources>

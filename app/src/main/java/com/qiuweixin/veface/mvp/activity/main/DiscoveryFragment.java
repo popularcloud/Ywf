@@ -6,14 +6,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.qiuweixin.veface.R;
+import com.qiuweixin.veface.base.AppConstants;
+import com.qiuweixin.veface.cache.ChannelCache;
+import com.qiuweixin.veface.callback.RequestCallBack;
 import com.qiuweixin.veface.mvp.activity.discovery.ItemFragment;
+import com.qiuweixin.veface.mvp.model.ChannelInfo;
+import com.qiuweixin.veface.network.okhttp.okHttpPost;
+import com.qiuweixin.veface.util.QBLToast;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.viewpagerindicator.TabPageIndicator;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,11 +40,15 @@ public class DiscoveryFragment extends Fragment {
     @Bind(R.id.pagers)
     ViewPager viewPager;
 
-    /**
-     * Tab标题
-     */
-    private static final String[] TITLE = new String[] { "头条", "房产", "另一面", "女人",
-            "财经", "数码", "情感", "科技","体育","篮球" };
+    private ArrayList<ChannelInfo> selChannelInfoList;
+    private ArrayList<ChannelInfo> notSelChannelInfoList;
+
+    private static final String TAG = "DiscoveryFragment";
+
+    private ArrayList<ChannelInfo> defaultChannelList;
+
+    private ArrayList<ChannelInfo> channelList;
+    private TabPageIndicatorAdapter adapter;
 
     @Nullable
     @Override
@@ -40,8 +56,47 @@ public class DiscoveryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);
         ButterKnife.bind(this, view);
 
+        initDefaultChannel();
+        initContent();
+        initData();
+        return view;
+    }
+
+    private void initDefaultChannel() {
+        defaultChannelList = new ArrayList<>();
+        defaultChannelList.add(new ChannelInfo(10,"热门","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+        defaultChannelList.add(new ChannelInfo(2,"动态","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+        defaultChannelList.add(new ChannelInfo(7,"时尚","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+        defaultChannelList.add(new ChannelInfo(4,"娱乐","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+        defaultChannelList.add(new ChannelInfo(8,"生活","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+        defaultChannelList.add(new ChannelInfo(3,"社会","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+        defaultChannelList.add(new ChannelInfo(9,"美食","http://img.weilianapp.com/master/images/icons/1_0007.png"));
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+
+        loadCache();
+
+        requestChannelData();
+    }
+
+    /**
+     * 加载缓存数据
+     */
+    private void loadCache() {
+        channelList = ChannelCache.getSelChannelInfoList();
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 初始化页面和布局
+     */
+    private void initContent() {
         //给ViewPager设置Adapter
-        FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getActivity().getSupportFragmentManager());
+        adapter = new TabPageIndicatorAdapter(getActivity().getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
         //将indicator与ViewPager绑在一起（核心步骤）
@@ -56,7 +111,7 @@ public class DiscoveryFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getActivity().getApplicationContext(), TITLE[position], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), channelList.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -64,7 +119,87 @@ public class DiscoveryFragment extends Fragment {
 
             }
         });
-        return view;
+    }
+
+    /**
+     * 加载频道列表
+     */
+    private void requestChannelData() {
+
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("1", "1");
+
+        okHttpPost.excuteSimple(AppConstants.API.ARTICLE_CATEGORY_LIST, builder, new RequestCallBack() {
+            @Override
+            public void onSuccess(JSONObject json) {
+                Log.d(TAG, "频道列表json:" + json);
+                try {
+                    Boolean status = json.getBoolean("status");
+                    if (status) {
+                        JSONObject jObject = json.getJSONObject("data");
+                        JSONArray isAtt = jObject.getJSONArray("is_att");
+                        if (isAtt != null) {
+                            selChannelInfoList = new ArrayList<>(isAtt.size());
+
+                            for (Object arrObject : isAtt) {
+                                JSONObject j = (JSONObject) arrObject;
+
+                                ChannelInfo channel = JSON.toJavaObject(j, ChannelInfo.class);
+
+                                selChannelInfoList.add(channel);
+                            }
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    channelList = selChannelInfoList;
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+
+                        }
+                        JSONArray not_att = jObject.getJSONArray("not_att");
+                        if (not_att != null) {
+                            notSelChannelInfoList = new ArrayList<>(not_att.size());
+
+                            for (Object arrObject : not_att) {
+                                JSONObject j = (JSONObject) arrObject;
+
+                                ChannelInfo channel = JSON.toJavaObject(j, ChannelInfo.class);
+
+                                notSelChannelInfoList.add(channel);
+                            }
+                        }
+
+                        /**
+                         * 保存频道信息
+                         */
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ChannelCache.saveSelChannelInfoList(selChannelInfoList);
+                                ChannelCache.saveNotSelChannelInfoList(notSelChannelInfoList);
+                            }
+                        }).start();
+                    } else {
+                        String errorData = json.getString("data");
+                        QBLToast.show(errorData);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // QBLToast.show(R.string.unknown_exception);
+                    return;
+                } finally {
+                    //
+                    //sendVistorCount();
+                }
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
     }
 
     /**
@@ -80,7 +215,11 @@ public class DiscoveryFragment extends Fragment {
             //新建一个Fragment来展示ViewPager item的内容，并传递参数
             Fragment fragment = new ItemFragment();
             Bundle args = new Bundle();
-            args.putString("arg", TITLE[position]);
+            if(channelList != null){
+                args.putString("arg", channelList.get(position).getName());
+            }else{
+                args.putString("arg", defaultChannelList.get(position).getName());
+            }
             fragment.setArguments(args);
 
             return fragment;
@@ -88,12 +227,16 @@ public class DiscoveryFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return TITLE[position % TITLE.length];
+            if(channelList != null){
+                return channelList.get(position).getName();
+            }else{
+                return defaultChannelList.get(position).getName();
+            }
         }
 
         @Override
         public int getCount() {
-            return TITLE.length;
+            return channelList != null?channelList.size():defaultChannelList.size();
         }
     }
 }
