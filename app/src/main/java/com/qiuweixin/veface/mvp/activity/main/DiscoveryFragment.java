@@ -80,7 +80,7 @@ public class DiscoveryFragment extends Fragment {
 
         loadCache();
 
-        requestChannelData();
+      //  requestChannelData();
     }
 
     /**
@@ -215,11 +215,11 @@ public class DiscoveryFragment extends Fragment {
             //新建一个Fragment来展示ViewPager item的内容，并传递参数
             Fragment fragment = new ItemFragment();
             Bundle args = new Bundle();
-            if(channelList != null){
-                args.putString("arg", channelList.get(position).getName());
-            }else{
-                args.putString("arg", defaultChannelList.get(position).getName());
-            }
+          /*  if(channelList != null){
+                args.putInt("arg", channelList.get(position).getId());
+            }else{*/
+                args.putString("arg", defaultChannelList.get(position).getId()+"");
+           // }
             fragment.setArguments(args);
 
             return fragment;
@@ -227,16 +227,17 @@ public class DiscoveryFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if(channelList != null){
+           /* if(channelList != null){
                 return channelList.get(position).getName();
-            }else{
+            }else{*/
                 return defaultChannelList.get(position).getName();
-            }
+            //}
         }
 
         @Override
         public int getCount() {
-            return channelList != null?channelList.size():defaultChannelList.size();
+           // return channelList != null?channelList.size():defaultChannelList.size();
+            return defaultChannelList.size();
         }
     }
 }

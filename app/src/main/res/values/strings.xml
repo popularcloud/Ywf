@@ -7,4 +7,11 @@
     <string name="published">发布</string>
     <string name="mine">我的</string>
 
+
+    <!-- 错误提示 -->
+    <string name="no_more_data">没有更多数据了</string>
+    <string name="network_error">网络错误</string>
+
+    <string name="date_format">yyyy年MM月dd日</string>
+
 </resources>
