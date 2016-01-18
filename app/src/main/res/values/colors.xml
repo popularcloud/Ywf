@@ -11,4 +11,5 @@
     <color name="gray_transparent">#c8414141</color><!--灰色，半透明 -->
 
     <color name="text_gray">#808080</color><!-- 文字灰色 -->
+    <color name="base_bg">#f4f4f5</color><!-- 底层背景 -->
 </resources>

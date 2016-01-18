@@ -23,13 +23,23 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
+
+    //*********************依赖包
     //网络请求
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okio:okio:1.5.0'
-
+    //json
     compile 'com.alibaba:fastjson:latest.integration'
+    //图片处理框架fresco
     compile 'com.facebook.fresco:fresco:0.5.0+'
     compile 'com.android.support:recyclerview-v7:23.+'
+    // 刷新组件，记得添加nineoldandroids
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'cn.bingoogolapple:bga-refreshlayout:1.0.7@aar'
+
+    //*********************lib
     compile files('libs/butterknife-7.0.1.jar')
-    compile project(':viewpagerindicator')
+
+    //*********************y依赖项目
+   compile project(':viewpagerindicator')
 }
