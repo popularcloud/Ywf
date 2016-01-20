@@ -22,7 +22,6 @@ public class AnimationTest1 extends Activity{
     @Bind(R.id.btn_test)
     Button btn_test;
 
-    Scroller scroller = new Scroller(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,4 @@ public class AnimationTest1 extends Activity{
        // initContent();
     }
 
-    private void smoothScrollTo(int destX,int destY){
-       // int scrollX = getScrollX();
-    }
 }

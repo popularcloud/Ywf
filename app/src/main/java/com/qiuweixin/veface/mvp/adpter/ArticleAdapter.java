@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.qiuweixin.veface.R;
-import com.qiuweixin.veface.mvp.model.ArticleInfo;
+import com.qiuweixin.veface.mvp.bean.ArticleInfo;
 import com.qiuweixin.veface.util.DateUtil;
 
 import java.util.ArrayList;

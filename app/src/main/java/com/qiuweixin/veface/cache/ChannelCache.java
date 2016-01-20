@@ -3,7 +3,7 @@ package com.qiuweixin.veface.cache;
 import android.os.Environment;
 import android.util.Log;
 
-import com.qiuweixin.veface.mvp.model.ChannelInfo;
+import com.qiuweixin.veface.mvp.bean.ChannelInfo;
 import com.qiuweixin.veface.util.PreferenceUtils;
 
 import java.io.File;

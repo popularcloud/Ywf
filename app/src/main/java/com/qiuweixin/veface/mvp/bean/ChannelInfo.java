@@ -1,4 +1,4 @@
-package com.qiuweixin.veface.mvp.model;
+package com.qiuweixin.veface.mvp.bean;
 
 import android.os.Parcel;
 

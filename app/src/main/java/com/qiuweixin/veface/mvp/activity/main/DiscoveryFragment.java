@@ -19,7 +19,7 @@ import com.qiuweixin.veface.base.AppConstants;
 import com.qiuweixin.veface.cache.ChannelCache;
 import com.qiuweixin.veface.callback.RequestCallBack;
 import com.qiuweixin.veface.mvp.activity.discovery.ItemFragment;
-import com.qiuweixin.veface.mvp.model.ChannelInfo;
+import com.qiuweixin.veface.mvp.bean.ChannelInfo;
 import com.qiuweixin.veface.network.okhttp.okHttpPost;
 import com.qiuweixin.veface.util.QBLToast;
 import com.squareup.okhttp.FormEncodingBuilder;

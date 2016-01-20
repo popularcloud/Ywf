@@ -1,4 +1,4 @@
-package com.qiuweixin.veface.mvp.model;
+package com.qiuweixin.veface.mvp.bean;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
