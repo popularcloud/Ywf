@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
  * Created by Allen Lake on 2016/1/12 0012.
+ * 发现页fragment页签
  */
 public class ItemFragment extends Fragment implements IArticleView{
 
@@ -36,44 +38,59 @@ public class ItemFragment extends Fragment implements IArticleView{
     @Bind(R.id.error_layout)
     TextView errorLayout;
 
+    private static final String TAG = "ItemFragment";
     public static Long mNextPage = 0L;
     public static Boolean isLoadingMore;
-    //是否刷新
     public static boolean isRefreshing;
 
+    /**
+     * 文章列表显示的控制器类
+     */
     private ArticlePresenter mArticlePresenter = new ArticlePresenter(this);
-
-    private String TAG = "ItemFragment";
+    /**
+     * 频道id
+     */
     private String mChannelId;
+    /**
+     * 文章列表中的适配器
+     */
     private ArticleAdapter adpter;
-
-    private LinearLayoutManager mLayoutManager;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //动态找到布局文件，再从这个布局中find出TextView对象
         View contextView = inflater.inflate(R.layout.fragment_item, container, false);
+        //fragment中绑定ButterKnife
         ButterKnife.bind(this, contextView);
+
         //获取Activity传递过来的参数
         Bundle mBundle = getArguments();
-        mChannelId = mBundle.getString("arg");
+        mChannelId = mBundle.getString("mChannelId");
 
+        if (savedInstanceState != null && "".equals(mChannelId)) {
+            mChannelId = savedInstanceState.getString("mChannelId");
+        }
+        //初始化的方法
         initContentView();
+
+        Log.d(TAG,"进入onCreateView方法");
         return contextView;
     }
 
     private void initContentView() {
         //初始化刷新组件
         BGARefreshLayoutBuilder.init(getContext(), bgaRefreshLayout, true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+
+        //设置RecyclerView
+        LinearLayoutManager  mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         //添加分割线
         mRecyclerView.addItemDecoration(new DividerItemDecoration(
                 getActivity(), DividerItemDecoration.VERTICAL_LIST));
         adpter = new ArticleAdapter();
         mRecyclerView.setAdapter(adpter);
+
+        //为刷新组件设置事件
         bgaRefreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
@@ -94,22 +111,15 @@ public class ItemFragment extends Fragment implements IArticleView{
         });
     }
 
+    /**
+     * 点击重新加载数据
+     * @param view
+     */
     @OnClick(R.id.error_layout)
     public void onErrorLayoutClick(View view){
         errorLayout.setVisibility(View.GONE);
         bgaRefreshLayout.setVisibility(View.VISIBLE);
         bgaRefreshLayout.beginRefreshing();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        bgaRefreshLayout.beginRefreshing();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     /**
@@ -148,6 +158,9 @@ public class ItemFragment extends Fragment implements IArticleView{
 
     }
 
+    /**
+     * 无数据的显示
+     */
     @Override
     public void showNoData() {
         getActivity().runOnUiThread(new Runnable() {
@@ -157,5 +170,24 @@ public class ItemFragment extends Fragment implements IArticleView{
                 bgaRefreshLayout.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mChannelId",mChannelId);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "进入onActivityCreated方法");
+        bgaRefreshLayout.beginRefreshing();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "进入onResume方法");
     }
 }

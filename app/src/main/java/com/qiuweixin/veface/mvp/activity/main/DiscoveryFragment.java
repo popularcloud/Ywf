@@ -59,6 +59,7 @@ public class DiscoveryFragment extends Fragment {
         initDefaultChannel();
         initContent();
         initData();
+        Log.d(TAG, "频道列表json:");
         return view;
     }
 
@@ -218,7 +219,7 @@ public class DiscoveryFragment extends Fragment {
           /*  if(channelList != null){
                 args.putInt("arg", channelList.get(position).getId());
             }else{*/
-                args.putString("arg", defaultChannelList.get(position).getId()+"");
+                args.putString("mChannelId", defaultChannelList.get(position).getId()+"");
            // }
             fragment.setArguments(args);
 

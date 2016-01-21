@@ -7,5 +7,10 @@ import com.qiuweixin.veface.callback.BaseCallBack;
  */
 public interface IArticleModel {
 
+    /**
+     * 从服务器获取数据
+     * @param cate_id
+     * @param baseCallBack
+     */
     void loadArticleData(String cate_id, BaseCallBack baseCallBack);
 }

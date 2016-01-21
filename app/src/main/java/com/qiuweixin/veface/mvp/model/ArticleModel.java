@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Allen Lake on 2016/1/19 0019.
+ * 文章列表业务逻辑类
  */
 public class ArticleModel implements IArticleModel{
 
